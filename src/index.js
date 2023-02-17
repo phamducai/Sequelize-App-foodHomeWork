@@ -1,14 +1,12 @@
 const express = require("express");
-
-// gán lại hàm cho một biến mới
-const app = express();
-// cho phép server backend đọc được chuỗi json
-// middleware
-app.use(express.json());
-
 const cors = require("cors");
+const rootRoute = require("./router/Root.Router");
+const test = require("./router/Test.Router");
+const app = express();
 app.use(cors());
 
-const rootRoute = require("./routes/rootRoute");
+app.use(express.json());
+app.use(express.static("."));
+app.use("/test", test);
 app.use("/api", rootRoute);
-app.listen(8080);
+app.listen(8080, () => console.log("success"));
