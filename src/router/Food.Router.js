@@ -1,6 +1,6 @@
 const express = require("express");
-const { getFood } = require("../controller/Food.controller");
+const { OrderFood } = require("../controller/OrderFood.controller");
 const userRoute = express.Router();
-userRoute.get("/getFood", getFood);
+userRoute.post("/postOder", OrderFood);
 
 module.exports = userRoute;
