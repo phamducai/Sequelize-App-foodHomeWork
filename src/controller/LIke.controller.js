@@ -15,13 +15,14 @@ const likeStatusRes = async (req, res) => {
       // If the user has already liked the restaurant, remove their like
       await model.like_res.destroy({ where: { user_id, res_id } });
       res.status(200).send("Bạn đã DISLIKE");
+    } else {
+      await model.like_res.create({ user_id, res_id });
+      res.status(200).send("BẠN ĐÃ LIKE");
     }
     // If the user has not yet liked the restaurant, add their like
-    await model.like_res.create({ user_id, res_id });
-    res.status(200).send("BẠN ĐÃ LIKE");
   } catch (error) {
     // Handle errors by sending a generic error message
-    throw new Error();
+    throw error;
   }
 };
 
@@ -34,7 +35,7 @@ const getRestaurantsWithLikes = async (req, res) => {
     });
     res.send(data);
   } catch (error) {
-    throw new Error();
+    throw error;
   }
 };
 // Retrieve a list of users with their associated liked restaurants
@@ -43,7 +44,7 @@ const getUsersWithLikes = async (req, res) => {
     const data = await model.user.findAll({ include: ["res_id_restaurants"] });
     res.send(data);
   } catch (error) {
-    throw new Error();
+    throw error;
   }
 };
 
